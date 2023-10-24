@@ -1,0 +1,26 @@
+{
+  "name": "VTCRO-Libraries",
+  "version": "1.0.0",
+  "description": "A set of commonly used Teensy libraries used by both Southeastcon teams of VTCRO",
+  "keywords": "teensy",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/VT-CRO/VTCRO-Libraries.git"
+  },
+  "authors":
+  [
+    {
+      "name": "Jayson De La Vega",
+      "email": "jaysond21@vt.edu",
+    },
+    {
+      "name": "Jay Katyan",
+    }
+  ],
+  "_dependencies": {
+    "ownername/print": "~1.3.0"
+  },
+  "_frameworks": "*",
+  "_platforms": "*"
+}
