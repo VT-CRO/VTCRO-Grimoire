@@ -18,8 +18,15 @@
       "name": "Jay Katyan"
     }
   ],
-  "_dependencies": {
-    "ownername/print": "~1.3.0"
+  "dependencies": {
+    {
+      "owner": "tsandmann",
+      "name": "freertos-teensy",
+      "version": "https://github.com/tsandmann/freertos-teensy.git"
+    },
+    {
+      "frankjoshua/Rosserial Arduino Library": "^0.9.1"
+    }
   },
   "_frameworks": "*",
   "_platforms": "*"
