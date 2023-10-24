@@ -18,7 +18,7 @@
       "name": "Jay Katyan"
     }
   ],
-  "dependencies": {
+  "dependencies": [
     {
       "owner": "tsandmann",
       "name": "freertos-teensy",
@@ -27,7 +27,7 @@
     {
       "frankjoshua/Rosserial Arduino Library": "^0.9.1"
     }
-  },
+  ],
   "_frameworks": "*",
   "_platforms": "*"
 }
