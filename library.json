@@ -20,11 +20,13 @@
   ],
   "dependencies": [
     {
-      "name": "external-repo",
+      "name": "freertos-teensy",
       "version": "https://github.com/tsandmann/freertos-teensy.git"
     },
     {
-      "frankjoshua/Rosserial Arduino Library": "^0.9.1"
+      "owner": "frankjoshua",
+      "name": "Rosserial Arduino Library",
+      "version": "^0.9.1"
     }
   ],
   "_frameworks": "*",
