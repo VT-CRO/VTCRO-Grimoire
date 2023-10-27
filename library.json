@@ -20,8 +20,7 @@
   ],
   "dependencies": [
     {
-      "owner": "tsandmann",
-      "name": "freertos-teensy",
+      "name": "external-repo",
       "version": "https://github.com/tsandmann/freertos-teensy.git"
     },
     {
