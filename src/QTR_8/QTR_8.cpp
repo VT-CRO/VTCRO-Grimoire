@@ -1,12 +1,6 @@
 #include "QTR_8.h"
+#include <arduino_freertos.h>
 
-
-typedef struct
-{
-  uint16_t* pins;
-  uint16_t* data;
-  uint16_t sampleSize;
-} QTR_t;
 
 uint16_t s0 = A0;
 uint16_t s1 = A1;
