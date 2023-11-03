@@ -3,48 +3,34 @@
 
 typedef struct
 {
-  uint16_t pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8;
+  uint16_t* pins;
   uint16_t* data;
+  uint16_t sampleSize;
 } QTR_t;
 
-int s0 = A0;
-int s1 = A1;
-int s2 = A2;
-int s3 = A3;
-int s4 = A4;
-int s5 = A5;
-int s6 = A6;
-int s7 = A7;
+uint16_t s0 = A0;
+uint16_t s1 = A1;
+uint16_t s2 = A2;
+uint16_t s3 = A3;
+uint16_t s4 = A4;
+uint16_t s5 = A5;
+uint16_t s6 = A6;
+uint16_t s7 = A7;
+uint16_t sensorPins[] = {s0, s1, s2, s3, s4, s5, s6, s7};
 uint16_t readings[8];
 QTR_t data{};
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  data = QTR_init(s0, s1, s2, s3, s4, s5, s6, s7, readings);
+  data = QTR_init(sensorPins, readings, 4);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
   
-  data.data[0] = analogRead(data.pin1);
-  data.data[1] = analogRead(data.pin2);
-  data.data[2] = analogRead(data.pin3);
-  data.data[3] = analogRead(data.pin4);
-  data.data[4] = analogRead(data.pin5);
-  data.data[5] = analogRead(data.pin6);
-  data.data[6] = analogRead(data.pin7);
-  data.data[7] = analogRead(data.pin8);
-/*
-  readings[0] = analogRead(s0);
-  readings[1] = analogRead(s1);
-  readings[2] = analogRead(s2);
-  readings[3] = analogRead(s3);
-  readings[4] = analogRead(s4);
-  readings[5] = analogRead(s5);
-  readings[6] = analogRead(s6);
-  readings[7] = analogRead(s7);
-*/
+  sensorRead(data.data, 8);
+
   for (uint8_t i = 0; i < 8; i++)
   {
     Serial.print("Value at ");
@@ -53,56 +39,51 @@ void loop() {
     Serial.println(data.data[i]);
     
   }
-
-  data.data[0] = changeBit(data.data[0]);
-  data.data[1] = changeBit(data.data[1]);
-  data.data[2] = changeBit(data.data[2]);
-  data.data[3] = changeBit(data.data[3]);
-  data.data[4] = changeBit(data.data[4]);
-  data.data[5] = changeBit(data.data[5]);
-  data.data[6] = changeBit(data.data[6]);
-  data.data[7] = changeBit(data.data[7]);
-
-/*
-  readings[0] = changeBit(readings[0]);
-  readings[1] = changeBit(readings[1]);
-  readings[2] = changeBit(readings[2]);
-  readings[3] = changeBit(readings[3]);
-  readings[4] = changeBit(readings[4]);
-  readings[5] = changeBit(readings[5]);
-  readings[6] = changeBit(readings[6]);
-  readings[7] = changeBit(readings[7]);
-*/
-  for (uint8_t j = 0; j < 8; j++)
-  {
-    Serial.print("Value at ");
-    Serial.print(j);
-    Serial.print(": ");
-    Serial.println(data.data[j]);
-    
-  }
   
   delay(1000);
 }
 
-
-QTR_t QTR_init(uint16_t pin1, uint16_t pin2, uint16_t pin3, uint16_t pin4, uint16_t pin5, uint16_t pin6, uint16_t pin7, uint16_t pin8, uint16_t data[])
+void sensorRead(uint16_t* sensorValues, int sensorCount)
 {
-   QTR_t values = {pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8, data};
+    for (uint8_t r = 0; r < sensorCount; r += 1)
+      {
+        data.data[r] = 0;
+      }
+
+  for (uint8_t m = 0; m < 4; m++)
+      {
+        for (uint8_t n = 0; n < sensorCount; n += 1)
+        {
+          // add the conversion result
+          data.data[n] += analogRead(data.pins[n]);
+        }
+      }
+
+  for (uint8_t k = 0; k < 8; k += 1)
+      {
+        data.data[k] = (data.data[k] + (4 >> 1)) /
+          4;
+      }
+}
+
+QTR_t QTR_init(uint16_t pins[], uint16_t data[], uint16_t sampleSize)
+{
+   QTR_t values = {pins, data, sampleSize};
    return values;
 }
 
+//In line following algorithm
 int changeBit (int initialVal)
 {
     int changedBit = -1;
 
-    if (initialVal >= 7)
+    if (initialVal >= 60)
     {
-        changedBit = 1;
+        changedBit = 0;
     }
     else
     {
-        changedBit = 0;
+        changedBit = 1;
     }
 
     return changedBit;
